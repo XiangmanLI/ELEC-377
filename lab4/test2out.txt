@@ -1,0 +1,10 @@
+Main files:
+labs/lab0/lab0user.c 1 1
+labs/lab1/shell.c 10 8
+labs/lab3/consumer.c 0 2
+labs/lab3/meminit.c 3 0
+labs/lab3/producer.c 0 2
+true
+Modules files:
+labs/lab0/lab0mod.c : 77,80,108
+labs/lab2/lab2.c : 47,96

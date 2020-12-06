@@ -1,0 +1,387 @@
+===================================
+===================================
+
+ Name: lab0mod.c  ELEC 377 Demo Module
+
+ Pupose:
+	Demo Lab showing the use of Linux Modules
+	Return How long OS has been running in a human readable string
+	through a /proc file
+
+	Author: Thomas R. Dean
+
+
+ Function: my_read:
+   A function that will be called by the kernel when
+   the user reads the /proc file. In this case, the number
+   of characters is always less than the size of the buffer,
+   so we use a simplified version of the /proc api. We write
+   the time of boot as a unix time stamp into the buffer.
+
+   Parameters:
+       page  the buffer provided by the kernel
+	 start  point to pointer to indicate which buffer was  used
+	 fpos  the postion in the file
+	 blen  the length of page (ignored)
+	 eof   pointer to indicate end of file
+	 data  module private data pointer (ignored)
+
+   Return value:
+	int  The number of bytes written into the buffer
+
+
+ Name: init_module
+
+ Purpse: Called by the kernel to initialize
+	any data structures used by the module when
+	the module is loaded. In this case we will
+	add our file entry to the /proc file system
+
+ Paramters:
+	None
+
+ Return value:
+     int 0 on success, nonzero for failure
+
+
+ Name: cleanup_module
+
+ Purpose: Called by the kernel to deallocate
+	any data structures used by the module when
+	the module is removed from the kernel. In our
+      case we remove the entry from the /proc file system
+
+ Paramters:
+	None
+
+  Returns:
+	None
+
+===================================
+
+	lab0user.c  ELEC377 Demo User Module
+
+	This program reads the results produced by our /proc module
+	and formats it for the user.
+
+	Author: Thomas R. Dean
+
+
+ Funtion main
+ 
+ Purpose: This function reads the file /proc/Lab0
+   The contents of the file is the unix time stamp giving the
+   time when the system was booted. It uses the ctime library
+   to convert the string to a readable form and prints an
+   appropriate message.
+
+ Parameters:
+	none
+
+ Returns int
+
+===================================
+
+ File:	shell.c
+
+ Pupose: 	This program implements a simple shell program. It does not start
+		processes at this point in time. However, it will change directory
+		and list the contents of the current directory.
+
+		The commands are:
+		   cd name > change to directory name, print an error if the directory doesn't exist.
+		              If there is no parameter, then change to the home directory.
+		   ls > list the entries in the current directory.
+			      If no arguments, then ignores entries starting with .
+			      If a then all entries
+		   pwd > print the current directory.
+		   exit > exit the shell (default exit value 0)
+
+		if the command is not recognized an error is printed.
+
+
+ Function:    main
+
+ Purpose: 	Starting point of the program. This contains
+		the command loop. Removes the newline, splits
+		the command line into words, and executes the command.
+		Exits on EOF, or if the exit function is called.
+
+
+ Function:	skipChar
+
+ Purpose:	This function skips over a given char in a string
+		For security, will not skip null chars.
+
+ Parameters:
+    charPtr	Pointer to string
+    skip	character to skip
+
+ Returns:	Pointer to first character after skipped chars
+		ID function if the string doesn't start with skip,
+		or skip is the null character
+
+
+ Funtion:	splitCommandLine
+
+ Purpose:	This splits a string into an array of strings.
+		The array is passed as an argument. The string
+		is modified by replacing some of the space characters
+		with null characters to terminate each of the strings.
+
+ Parameters:
+	commandBuffer	The string to split
+	args		An array of char pointers
+	maxargs		Size of array args (max number of argyments)
+
+ Returns:	Number of arguments (< maxargs).
+
+
+
+ Function:	doCommand
+
+ Purpose:	This command calls a command handling funciton from
+		the commands array based on the first argument passed
+		in the args array.
+
+ Parameters:
+	args	command and parameters, an array of pointers to strings
+	nargs	number of entries in the args array
+
+ Returns	nothing (void)
+
+
+ Function:	all handling funcionts
+
+ Purpose:	this command performs the funcdtion
+		associated with the commands.
+		The name of the comomand is in first argument.
+	 	Since it is called by doCommand, it is known
+		that arg is at least one element long
+
+ Parameters:
+	args	command and parameters, an array of pointers to strings
+	nargs	number of entries in the args array
+
+ Returns	nothing (void)
+
+
+ Function:    exitFunc
+ Purpose:	exit the shell
+
+
+ Function:    pwdFunc
+ Purpose:     print the working directory
+
+
+ Function:    isHidden
+ Purpose:     utility funcdtion for ls command Function
+ 		returns true if the directory entry starts
+ 		with a dot ('.')
+ Prameters:	sturct dirent *d  pointer to directory entity structure
+
+ Returns:	int (true or false)
+
+
+ Function:    pwdFunc
+ Purpose:     list the contents of the current directory
+  		default is to ignore hidden files
+  		argument "a" means to list all files
+
+
+ Function:    lsFunc
+ Purpose:     change the current working directory
+   		default is to the home directory
+   		if an argument attempt to change
+   		to the given directory
+   		report an error if the directory does not exist
+
+===================================
+
+ Module:  lab2.c
+
+ Purpose: This file provides a kernel module that 
+     prints the list of active processes giving
+     the process id, the userid, the total number
+     of VM pages and the number of VM pages that are resident.
+
+
+
+ Name: my_read_proc:
+
+  Purpose:
+   this function that will be called by the kernel when
+   the user reads the /proc/lab2 file. The first time the proc
+   is read (fpos is 0) we return the headers and the data for
+   the first process. On subsequent calls we return the data
+   for the next process. We return EOF when we have reached
+   the first proc.
+
+   Parameters:
+       page  the buffer provided by the kernel
+	 start  point to pointer to indicate which buffer was  used
+	 fpos  the postion in the file
+	 blen  the length of page (ignored)
+	 eof   pointer to indicate end of file
+	 data  module private data pointer (ignored)
+
+   Return value:
+	int  The number of bytes written into the buffer
+
+
+ Name: init_module
+
+  Purpose:
+	Called by the kernel to initialize
+      any data structures used by the module when
+      the module is loaded. In this case we will
+      add our file entry to the /proc file system
+
+  Parameters:
+	None
+
+ Return value
+      int  0 on success, non-zero for failure
+
+
+ Name: cleanup_module
+
+ Purpose:
+	 Called by the kernel to deallocate
+      any data structures used by the module when
+      the module is removed from the kernel. In our
+      case we remove the entry from the /proc file system
+
+  Parameters:
+	None
+
+ Return value
+      none
+
+===================================
+
+ Name: common.c
+
+ Purpose: contains routines to be used by both the producer,
+       and the consumer. 
+       Mutual Exclusion routines are here.
+
+
+ Function: test_and_set
+
+  Purpose: C wrapper for the xmpxchng machine languate instruction.
+   Reads the value of the lock variable and sets it to 1.
+
+  Paramters:
+	lock  the address of the shared lock variable
+
+  Returns
+	The value of lock variable from the exchange.
+
+
+  getMutex  The C implemenation of the spinlock test
+   and set approach. This function busy waits until the
+   lock is false and then sets it to true.
+
+  Paramters:
+	lock  the address of the shared lock variable
+
+  Returns
+	Nothing
+
+
+  releaseMutex  The C implemenation of the spinlock test
+   and set approach. This sets the lock to false.
+
+  Paramters:
+	lock  the address of the shared lock variable
+
+  Returns
+	Nothing
+
+===================================
+
+  Name: common.h
+
+  Purpose: Common definiton of the shared memory segment
+     and prototypes for semaphore functions
+ 
+  Created by Thomas Dean
+  Copyright 2005 Queen's University.
+
+
+
+ Name: shared
+
+ Purpose: 
+   Defines the variables in the shared memory segment
+
+ Fields:
+    lock  the shared lock varible
+    buffer  the array used for the fifo queue
+    inPtr  the array index at which elements are inserted.
+    outPtr  the array index at which elements are removed.
+    count  the number of elements in the queue
+    prodCount  the number of running producers.
+
+===================================
+
+ Name:  consumer.c
+
+ Purpose: this file implements the consumer using a
+   shared segement and a simple implementatin of mutual exclusion.
+
+
+ Name:  main
+
+ Purpose: This is the main function. It implements the conumer using a
+   shared segement and a simple implementatin of mutual exclusion.
+
+ Parameters:
+	argc  count of command line arguments (ignored)
+	argv  array of command line arguments (ignored)
+
+ Parameters:
+      int
+
+===================================
+
+ Name:  meminit.c
+
+ Purpose: This file creates and initializes a shared memory segment.
+
+
+ Name:  main
+
+ Purpose: This is the main function. It creates a shared memory
+   segment if it does not alreay exist. The id of the shared
+   memory segement is attached to the current directory. After
+   creration, it is mapped and initialized to Zero.
+
+ Parameters:
+	argc  count of command line arguments (ignored)
+	argv  array of command line arguments (ignored)
+
+ Parameters:
+      int
+
+===================================
+
+ Name:  producer.c
+
+ Purpose: this file implements the producer using a
+   shared segement and a simple implementatin of mutual exclusion.
+
+
+ Name:  main
+
+ Purpose: This is the main function. It implements the producer using a
+   shared segement and a simple implementatin of mutual exclusion.
+
+ Parameters:
+	argc  count of command line arguments (ignored)
+	argv  array of command line arguments (ignored)
+
+ Parameters:
+      int
+
