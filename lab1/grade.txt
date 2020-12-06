@@ -1,0 +1,6 @@
+working code		1 /1.5 (output not clean, some debugging was left running)
+documentation		3.5 /3.5 
+test			    2.5 /3.5 (no documentation for tests)
+code clarity		1.5 /1.5 
+
+total			8.5 /10

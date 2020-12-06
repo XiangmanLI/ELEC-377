@@ -1,0 +1,47 @@
+Script started on Sun 27 Sep 2020 02:36:44 PM EDT
+student@ELEC377-Student:~/ELEC377-Group-105/lab1$ maek
+bash: maek: command not found
+student@ELEC377-Student:~/ELEC377-Group-105/lab1$ make
+make: `shell' is up to date.
+student@ELEC377-Student:~/ELEC377-Group-105/lab1$ sgell    hell
+%>   we are  good .
+4
+0: we
+%> 1: are
+%> 2: good
+%> 3: .
+%> pwd
+1
+0: pwd
+/home/student/ELEC377-Group-105/lab1
+%> ls -a
+2
+0: ls
+.
+..
+Makefile
+shell.c
+test.txt
+test1.txt
+test1,txt
+typescript
+shell
+describe.txt
+%> 1: -a
+%> cd ..
+2
+0: cd
+/home/student
+cd successful 
+%> 1: ..
+%> exit
+1
+0: exit
+student@ELEC377-Student:~/ELEC377-Group-105/lab1$ e pwd
+/home/student/ELEC377-Group-105/lab1
+student@ELEC377-Student:~/ELEC377-Group-105/lab1$ ls -a
+.  ..  Makefile  describe.txt  shell  shell.c  test.txt  test1,txt  test1.txt  typescript
+student@ELEC377-Student:~/ELEC377-Group-105/lab1$ cd..   ..
+student@ELEC377-Student:~/ELEC377-Group-105$ exit
+
+Script done on Sun 27 Sep 2020 02:37:56 PM EDT
