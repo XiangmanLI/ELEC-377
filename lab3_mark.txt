@@ -1,0 +1,11 @@
+Documentation  					2.5		out of 3.5
+Testing Docs 					3.5		out of 3.5
+Code correctness 				1.5		out of 1.5
+Code Clairty (organization) 	1.5		out of 1.5
+Total 							9		out of 10
+
+
+Comments:
+The code compiles and works. 
+The test and code docs are ok. But it seems you had merge conflict when pushing your files, so I can't understand what happened. Also the code doc should have some structure, and also explain common.c as well.
+Detailed comment blocks should be placed before functions, not inside them. Also they are missing in common.c

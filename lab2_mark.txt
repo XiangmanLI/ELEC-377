@@ -1,0 +1,12 @@
+Documentation					3.50		out of 3.5
+Testing Docs					3.00		out of 3.5
+Code correctness				1.50		out of 1.5
+Code Clairty (organization)		1.50		out of 1.5
+Total							9.50		out of 10
+
+
+Comments:
+Code worked and compiled as expected.
+The documentation for the code needs better structure. Right now, it looks more like a lab report rather than a code documentation. Please refer to the solutions in onQ or any code documentation available online to see how your should write your documentation. Each function should be explained individually on how it works.
+Your tests are correct, but you did not identify the reason to "why the pid is different?".
+Please consider adding comments to your code as well, since it's mandatory for future labs.
